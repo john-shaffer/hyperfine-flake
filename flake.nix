@@ -36,11 +36,52 @@
               --zsh $releaseDir/build/hyperfine-*/out/_hyperfine
           '';
         };
+        scripts = python3Packages.buildPythonPackage rec {
+          pname = "hyperfine-plot-scripts";
+          inherit src version;
+
+          propagatedBuildInputs = with python3Packages; [
+            matplotlib
+            numpy
+            pyqt6
+            scipy
+          ];
+
+          doCheck = false;
+
+          buildPhase = ''
+            true
+          '';
+
+          format = "other";
+
+          installPhase = ''
+            mkdir -p $out/bin
+            mkdir -p $out/share/hyperfine/scripts
+
+            # Copy the original plot_*.py scripts
+            cp ${src}/scripts/*.py $out/share/hyperfine/scripts/
+
+            # For each plot script create a lightweight wrapper in bin/
+            for script in $out/share/hyperfine/scripts/*.py; do
+              name=$(basename "$script" .py)
+              bin_name=$(printf '%s' "$name" | sed 's/_/-/')
+              wrapper="$out/bin/hyperfine-$bin_name"
+              cat > "$wrapper" <<EOF
+            #!${python3Packages.python.interpreter}
+            import os, sys
+            script = os.path.join(os.path.dirname(__file__), "..", "share", "hyperfine", "scripts", "$name.py")
+            sys.exit(os.execv(sys.executable, [sys.executable, script] + sys.argv[1:]))
+            EOF
+              chmod +x "$wrapper"
+            done
+          '';
+        };
       in {
-        devShells.default = mkShell { buildInputs = [ hyperfine ]; };
+        devShells.default = mkShell { buildInputs = [ hyperfine scripts ]; };
         lib = import ./src/lib.nix;
         packages = {
-          inherit hyperfine;
+          inherit hyperfine scripts;
           default = hyperfine;
         };
       });
