@@ -21,20 +21,20 @@ hyperfine-advanced-statistics bench.json
 
 All scripts require exported JSON files as input.
 The scripts included are:
-- hyperfine-advanced-statistics
+- **hyperfine-advanced-statistics**
   - Prints advanced statistics such as the stddev and  
     percentiles
-- hyperfine-plot-histogram
+- **hyperfine-plot-histogram**
   - Shows benchmark results as a histogram.
-- hyperfine-plot-parametrized
+- **hyperfine-plot-parametrized**
   - Shows parameterized benchmark results as an errorbar plot.
-- hyperfine-plot-progression
+- **hyperfine-plot-progression**
   - Shows benchmark results in a sequential way
     in order to debug possible background interference,
     caching effects, thermal throttling and similar effects.
-- hyperfine-plot-whisker
+- **hyperfine-plot-whisker**
   - Shows benchmark results as a box and whisker plot.
-- hyperfine-welch-ttest
+- **hyperfine-welch-ttest**
   - Performs Welch's t-test on a file with two
     benchmark results to test whether or not the two distributions are the same.
 
