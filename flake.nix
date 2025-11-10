@@ -79,7 +79,6 @@
         };
       in {
         devShells.default = mkShell { buildInputs = [ hyperfine scripts ]; };
-        lib = import ./src/lib.nix;
         packages = {
           inherit hyperfine scripts;
           default = hyperfine;
