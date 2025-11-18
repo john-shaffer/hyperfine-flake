@@ -22,7 +22,7 @@ hyperfine-advanced-statistics bench.json
 All scripts require exported JSON files as input.
 The scripts included are:
 - **hyperfine-advanced-statistics**
-  - Prints advanced statistics such as the stddev and  
+  - Prints advanced statistics such as the stddev and
     percentiles
 - **hyperfine-plot-benchmark-comparison**
   - Shows benchmark results as a bar plot grouped by command.
