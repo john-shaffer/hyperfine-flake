@@ -2,7 +2,7 @@
   description = "hyperfine";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -11,19 +11,19 @@
       with import nixpkgs { inherit system; };
       with pkgs;
       let
-        version = "1.19.0";
+        version = "1.20.0";
         src = fetchFromGitHub {
           owner = "sharkdp";
           repo = "hyperfine";
           rev = "v${version}";
-          hash = "sha256-c8yK9U8UWRWUSGGGrAds6zAqxAiBLWq/RcZ6pvYNpgk=";
+          hash = "sha256-Ee889Fx2Mi2005SrlcKc7TwG8ZIpTqisfLebXYadvSg=";
         };
         # From https://github.com/NixOS/nixpkgs/blob/59e69648d345d6e8fef86158c555730fa12af9de/pkgs/by-name/hy/hyperfine/package.nix
         hyperfine = rustPlatform.buildRustPackage rec {
           inherit src version;
           pname = "hyperfine";
 
-          cargoHash = "sha256-eZpGqkowp/R//RqLRk3AIbTpW3i9e+lOWpfdli7S4uE=";
+          cargoHash = "sha256-0e6QDVv//WQtfvrJj6jW1sEz7jFv3VC6UKLvclyytLs=";
 
           nativeBuildInputs = [ installShellFiles ];
 
