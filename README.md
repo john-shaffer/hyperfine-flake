@@ -24,6 +24,8 @@ The scripts included are:
 - **hyperfine-advanced-statistics**
   - Prints advanced statistics such as the stddev and  
     percentiles
+- **hyperfine-plot-benchmark-comparison**
+  - Shows benchmark results as a bar plot grouped by command.
 - **hyperfine-plot-histogram**
   - Shows benchmark results as a histogram.
 - **hyperfine-plot-parametrized**
