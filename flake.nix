@@ -6,8 +6,15 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }:
-    flake-utils.lib.eachDefaultSystem (system:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+      ...
+    }:
+    flake-utils.lib.eachDefaultSystem (
+      system:
       with import nixpkgs { inherit system; };
       with pkgs;
       let
@@ -86,11 +93,18 @@
             done
           '';
         };
-      in {
-        devShells.default = mkShell { buildInputs = [ hyperfine scripts ]; };
+      in
+      {
+        devShells.default = mkShell {
+          buildInputs = [
+            hyperfine
+            scripts
+          ];
+        };
         packages = {
           inherit hyperfine scripts;
           default = hyperfine;
         };
-      });
+      }
+    );
 }
