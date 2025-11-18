@@ -23,7 +23,6 @@
           inherit src version;
           pname = "hyperfine";
 
-          useFetchCargoVendor = true;
           cargoHash = "sha256-eZpGqkowp/R//RqLRk3AIbTpW3i9e+lOWpfdli7S4uE=";
 
           nativeBuildInputs = [ installShellFiles ];
