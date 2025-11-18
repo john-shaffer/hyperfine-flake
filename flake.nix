@@ -64,7 +64,7 @@
             # For each plot script create a lightweight wrapper in bin/
             for script in $out/share/hyperfine/scripts/*.py; do
               name=$(basename "$script" .py)
-              bin_name=$(printf '%s' "$name" | sed 's/_/-/')
+              bin_name=$(printf '%s' "$name" | sed 's/_/-/g')
               wrapper="$out/bin/hyperfine-$bin_name"
               cat > "$wrapper" <<EOF
             #!${python3Packages.python.interpreter}
