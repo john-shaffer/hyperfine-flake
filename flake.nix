@@ -35,6 +35,16 @@
               --zsh $releaseDir/build/hyperfine-*/out/_hyperfine
           '';
         };
+        scripts-python = (
+          pkgs.python3.withPackages (
+            python-pkgs: with python-pkgs; [
+              matplotlib
+              numpy
+              pyqt6
+              scipy
+            ]
+          )
+        );
         scripts = python3Packages.buildPythonPackage rec {
           pname = "hyperfine-plot-scripts";
           inherit src version;
@@ -67,7 +77,7 @@
               bin_name=$(printf '%s' "$name" | sed 's/_/-/g')
               wrapper="$out/bin/hyperfine-$bin_name"
               cat > "$wrapper" <<EOF
-            #!${python3Packages.python.interpreter}
+            #!${scripts-python.interpreter}
             import os, sys
             script = os.path.join(os.path.dirname(__file__), "..", "share", "hyperfine", "scripts", "$name.py")
             sys.exit(os.execv(sys.executable, [sys.executable, script] + sys.argv[1:]))
