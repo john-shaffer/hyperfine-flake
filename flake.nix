@@ -93,6 +93,13 @@
             done
           '';
         };
+        hyperfine-with-scripts = symlinkJoin {
+          name = "hyperfine-with-scripts-${version}";
+          paths = [
+            hyperfine
+            scripts
+          ];
+        };
       in
       {
         devShells.default = mkShell {
@@ -102,8 +109,8 @@
           ];
         };
         packages = {
-          inherit hyperfine scripts;
-          default = hyperfine;
+          inherit hyperfine scripts hyperfine-with-scripts;
+          default = hyperfine-with-scripts;
         };
       }
     );
