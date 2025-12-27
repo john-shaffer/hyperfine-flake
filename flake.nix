@@ -53,7 +53,7 @@
           )
         );
         scripts = python3Packages.buildPythonPackage rec {
-          pname = "hyperfine-plot-scripts";
+          pname = "hyperfine-scripts";
           inherit src version;
 
           propagatedBuildInputs = with python3Packages; [
