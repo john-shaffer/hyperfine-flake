@@ -5,7 +5,7 @@ A Nix flake for [hyperfine](https://github.com/sharkdp/hyperfine) and its script
 ## Usage
 
 ```bash
-nix develop github:john-shaffer/hyperfine-flake
+nix shell github:john-shaffer/hyperfine-flake
 
 # Run an example benchmark.
 # You can replace 'sleep 0.1' with any shell command

@@ -102,12 +102,6 @@
         };
       in
       {
-        devShells.default = mkShell {
-          buildInputs = [
-            hyperfine
-            scripts
-          ];
-        };
         packages = {
           inherit hyperfine scripts hyperfine-with-scripts;
           default = hyperfine-with-scripts;
