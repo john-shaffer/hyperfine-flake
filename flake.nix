@@ -74,24 +74,13 @@
               ]
             )
           );
-          scripts = python3Packages.buildPythonPackage rec {
+          # Not buildPythonPackage: its wrapPythonPrograms would add .*-wrapped
+          # copies to bin/, and the wrappers below already pin the interpreter.
+          scripts = stdenvNoCC.mkDerivation {
             pname = "hyperfine-scripts";
             inherit src version;
 
-            propagatedBuildInputs = with python3Packages; [
-              matplotlib
-              numpy
-              pyqt6
-              scipy
-            ];
-
-            doCheck = false;
-
-            buildPhase = ''
-              true
-            '';
-
-            format = "other";
+            dontBuild = true;
 
             installPhase = ''
               mkdir -p $out/bin
