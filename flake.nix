@@ -2,7 +2,8 @@
   description = "hyperfine";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    # Latest stable nixpkgs
+    nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0";
   };
 
   outputs =
