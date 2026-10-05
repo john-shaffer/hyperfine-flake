@@ -4,10 +4,14 @@
   inputs = {
     # Latest stable nixpkgs
     nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0";
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
-    { nixpkgs, ... }:
+    { nixpkgs, rust-overlay, ... }:
     let
       supportedSystems = [
         "aarch64-darwin"
@@ -16,7 +20,16 @@
         "x86_64-linux"
       ];
       forAllSystems =
-        function: nixpkgs.lib.genAttrs supportedSystems (system: function nixpkgs.legacyPackages.${system});
+        function:
+        nixpkgs.lib.genAttrs supportedSystems (
+          system:
+          function (
+            import nixpkgs {
+              inherit system;
+              overlays = [ rust-overlay.overlays.default ];
+            }
+          )
+        );
     in
     {
       packages = forAllSystems (
@@ -30,8 +43,13 @@
             rev = "v${version}";
             hash = "sha256-Ee889Fx2Mi2005SrlcKc7TwG8ZIpTqisfLebXYadvSg=";
           };
+          rustToolchain = rust-bin.stable."1.97.0".minimal;
+          rustPlatform' = makeRustPlatform {
+            cargo = rustToolchain;
+            rustc = rustToolchain;
+          };
           # From https://github.com/NixOS/nixpkgs/blob/59e69648d345d6e8fef86158c555730fa12af9de/pkgs/by-name/hy/hyperfine/package.nix
-          hyperfine = rustPlatform.buildRustPackage rec {
+          hyperfine = rustPlatform'.buildRustPackage rec {
             inherit src version;
             pname = "hyperfine";
 
